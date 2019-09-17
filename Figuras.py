@@ -35,13 +35,19 @@ class Figuras:
                 self.__canvas.create_polygon(int(x),int(y), int(antx), int(anty), int(x), int(anty), fill= "red")
                 break
 
+    def area(self):
+        pass
+
+    def perimetro(self):
+        pass
+
 
     def mostrar(self):
         self.__canvas.bind("<Button-1>", self.eventoMouse)
         self.__marco.mainloop()
 
 
-class circulo:
+class circulo(Figuras):
 
     def __init__(self,x1,y1,x2,y2):
         self.__x1 = x1
@@ -66,7 +72,7 @@ class circulo:
         canvas.create_oval(10, 10, self.__modulo()*100, self.__modulo()*100, width=5, fill="yellow")
 
 
-class cuadrado:
+class cuadrado(Figuras):
 
     def __init__(self,x1,y1,x2,y2):
         self.__x1 = x1
@@ -86,9 +92,7 @@ class cuadrado:
         a = math.pi * (self.__modulo()**2)
         return a
 
-    def dibujar(self,marco, canvas):
-        canvas.pack(expand=YES, fill=BOTH)
-        canvas.create_rectangle(10, 10, self.__modulo()*100, self.__modulo()*100, width=5, fill="yellow")
+
 
 
 class triangulo:
