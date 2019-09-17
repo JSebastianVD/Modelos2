@@ -3,7 +3,7 @@ import math
 
 class Figuras:
     __pos = []
-    __canvas,__marco, __boton = None, None, None
+    __canvas, __marco, antx, anty, x, y = None, None, None, None, None, None
     def __init__(self):
         self.__marco = Tk()
         self.__marco.title("Linea")
@@ -12,9 +12,7 @@ class Figuras:
         self.__canvas.place(x=0,y=0)
         self.__canvas.pack
 
-    # def __modulo(self):
-    #     r = math.sqrt(((self.__y2-self.__y1)**2)+((self.__x2-self.__x1)**2))
-    #     return r
+
 
     def eventoMouse(self,event):
         self.__pos.append(str(event.x) + "-" + str(event.y))
@@ -22,18 +20,30 @@ class Figuras:
         aux = 0
         for p in self.__pos:
             xy = p.split("-")
-            x = xy[0]
-            y = xy[1]
+            self.x = xy[0]
+            self.y = xy[1]
             if aux == 0:
-                antx = x
-                anty = y
+                self.antx = self.x
+                self.anty = self.y
                 aux = 1
             else:
-                r = math.sqrt((int(x) - int(antx))**2 + (int(y) - int(anty))**2)
-                self.__canvas.create_oval(int(antx) +r, int(anty) +r , int(antx)-r, int(anty)-r, fill="black")
-                self.__canvas.create_rectangle(int(antx), int(anty),int(x),int(y), fill="yellow")
-                self.__canvas.create_polygon(int(x),int(y), int(antx), int(anty), int(x), int(anty), fill= "red")
+                r = math.sqrt((int(self.x) - int(self.antx)) ** 2 + (int(self.y) - int(self.anty)) ** 2)
+                self.getCanvas().create_oval(int(self.antx) + r, int(self.anty) + r, int(self.antx) - r,
+                                             int(self.anty) - r, fill="black")
+                self.getCanvas().create_rectangle(int(self.antx), int(self.anty), int(self.x), int(self.y),
+                                                  fill="yellow")
+                self.getCanvas().create_polygon(int(self.x), int(self.y), int(self.antx), int(self.anty),
+                                                int(self.x), int(self.anty), fill="red")
                 break
+
+    def modulo(self):
+        r = math.sqrt((int(self.x) - int(self.antx)) ** 2 + (int(self.y) - int(self.anty)) ** 2)
+        return r
+    def getCanvas(self):
+        return self.__canvas
+
+    def getMarco(self):
+        return self.__marco
 
     def area(self):
         pass
@@ -48,71 +58,45 @@ class Figuras:
 
 
 class circulo(Figuras):
-
-    def __init__(self,x1,y1,x2,y2):
-        self.__x1 = x1
-        self.__x2 = x2
-        self.__y1 = y1
-        self.__y2 = y2
-
-    def __modulo(self):
-        r = math.sqrt(((self.__y2-self.__y1)**2)+((self.__x2-self.__x1)**2))
-        return r
+    def __init__(self):
+        Figuras.__init__(self)
 
     def perimetro(self):
-        p = 2*math.pi*self.__modulo()
+        r = self.modulo()
+        p = 2*math.pi*r
         return p
 
     def area(self):
-        a = math.pi * (self.__modulo()**2)
+        a = math.pi * (self.modulo()**2)
         return a
 
-    def dibujar(self,marco,canvas):
-        canvas.pack(expand=YES, fill=BOTH)
-        canvas.create_oval(10, 10, self.__modulo()*100, self.__modulo()*100, width=5, fill="yellow")
 
 
 class cuadrado(Figuras):
 
-    def __init__(self,x1,y1,x2,y2):
-        self.__x1 = x1
-        self.__x2 = x2
-        self.__y1 = y1
-        self.__y2 = y2
-
-    def __modulo(self):
-        r = math.sqrt(((self.__y2-self.__y1)**2)+((self.__x2-self.__x1)**2))
-        return r
+    def __init__(self):
+        Figuras.__init__(self)
 
     def perimetro(self):
-        p = 2*math.pi*self.__modulo()
+        p = (int(self.x)-int(self.antx))*4
         return p
 
     def area(self):
-        a = math.pi * (self.__modulo()**2)
+        a = math.pi * (self.modulo()**2)
         return a
 
+class triangulo(Figuras):
 
-
-
-class triangulo:
-
-    def __init__(self,x1,y1,x2,y2):
-        self.__x1 = x1
-        self.__x2 = x2
-        self.__y1 = y1
-        self.__y2 = y2
-
-    def __modulo(self):
-        r = math.sqrt(((self.__y2-self.__y1)**2)+((self.__x2-self.__x1)**2))
-        return r
+    def __init__(self):
+        Figuras.__init__(self)
 
     def perimetro(self):
-        p = 2*math.pi*self.__modulo()
+        r = self.modulo
+        p = r + (int(self.x)-int(self.antx))+(int(self.anty)-int(self.y))
         return p
 
     def area(self):
-        a = math.pi * (self.__modulo()**2)
+        a = math.pi * (self.modulo()**2)
         return a
 
     def dibujar(self,marco, canvas):
@@ -130,7 +114,7 @@ class triangulo:
 # obj2.dibujar(marco,canvas)
 # marco.mainloop()
 
-obj = Figuras()
+obj = cuadrado()
+
 obj.mostrar()
-
-
+obj.perimetro()
