@@ -8,7 +8,7 @@ class Figuras:
         self.__marco = Tk()
         self.__marco.title("Linea")
         self.__marco.geometry("700x500")
-        self.__canvas = Canvas(self.__marco, width=500, height=400, bg="white")
+        self.__canvas = Canvas(self.__marco, width=700, height=400, bg="white")
         self.__canvas.place(x=0,y=100)
         self.__canvas.pack
 
@@ -37,8 +37,8 @@ class Figuras:
                 break
         self.__r1.set(circulo.perimetro(self))
         self.__r2.set(circulo.area(self))
-        self.__r3.set(cuadrado.perimetro())
-        self.__r4.set(cuadrado.area())
+        self.__r3.set(cuadrado.perimetro(self))
+        self.__r4.set(cuadrado.area(self))
         self.__r5.set(triangulo.perimetro(self))
         self.__r6.set(triangulo.area(self))
 
@@ -133,11 +133,14 @@ class triangulo(Figuras):
         a = (self.__lx * self.__ly)/2
         return a
 
+class maain(Figuras):
+    def __init__(self):
+        Figuras.__init__(self)
 
 
 
 
-cuadrado = cuadrado()
-cuadrado.configurar()
+maaain = maain()
+maaain.configurar()
 
 
